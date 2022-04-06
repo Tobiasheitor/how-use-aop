@@ -15,7 +15,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(String taskId) throws TaskException {
         if (taskId.contentEquals("123")) {
-            throw new TaskException("Failed to delete", HttpStatus.NOT_FOUND);
+            throw new TaskException("Failed to delete", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

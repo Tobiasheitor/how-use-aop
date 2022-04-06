@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Configuration
 public class AspectConfig {
 
-    private Logger log = LoggerFactory.getLogger(AspectConfig.class);
+    private final Logger log = LoggerFactory.getLogger(AspectConfig.class);
 
     @Before(value = "execution(* com.learnAOP.howUseAOP.services.*.*(..))")
     public void logStatementBefore(JoinPoint joinPoint) {
@@ -30,10 +30,10 @@ public class AspectConfig {
 
     @Around(value = "execution(* com.learnAOP.howUseAOP.services.*.*(..))")
     public Object taskHandler(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        try {
-            Object obj = proceedingJoinPoint.proceed();
+        log.info("execution of {} with {} params", proceedingJoinPoint.getSignature().getDeclaringTypeName(), proceedingJoinPoint.getArgs());
 
-            return obj;
+        try {
+            return proceedingJoinPoint.proceed();
         } catch (TaskException e) {
             log.info("TaskException Status code: {}", e.getHttpStatus().value());
             log.info("TaskException Message: {}", e.getMessage());
